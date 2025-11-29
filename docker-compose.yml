@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  locallens-app:
+    build: .
+    ports:
+      - "8501:8501"
+    environment:
+      - POSTGRES_HOST=ep-still-math-ah71rcf7-pooler.c-3.us-east-1.aws.neon.tech  # Placeholder (User provides real env)
+    volumes:
+      - .:/app  # Live editing support

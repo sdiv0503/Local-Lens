@@ -1,0 +1,14 @@
+# System
+venv/
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+
+# Secrets (CRITICAL)
+.streamlit/secrets.toml
+.env
+
+# Data (We allow models, but ignore big CSVs if you want, though models are needed)
+# We WILL upload models this time.
+*.csv
