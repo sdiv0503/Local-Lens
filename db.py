@@ -4,9 +4,12 @@ import streamlit as st
 @st.cache_resource
 def init_connection():
     try:
-        # Try to get connection details from Streamlit Secrets (Cloud)
-        # If not found, fall back to local settings (Laptop)
+        # DEBUGGING: Print what keys exist in secrets
+        print("Available Secret Keys:", st.secrets.keys())
+
+        # Check if "postgres" section exists
         if "postgres" in st.secrets:
+            print("Found [postgres] section in secrets. Connecting to Cloud...")
             return psycopg2.connect(
                 dbname=st.secrets["postgres"]["dbname"],
                 user=st.secrets["postgres"]["user"],
@@ -15,7 +18,7 @@ def init_connection():
                 port=st.secrets["postgres"]["port"]
             )
         else:
-            # Fallback for local testing
+            print("⚠️ [postgres] section NOT found. Falling back to Localhost...")
             return psycopg2.connect(
                 dbname="local_lens_db", 
                 user="postgres", 
@@ -25,6 +28,7 @@ def init_connection():
             )
     except Exception as e:
         print(f"DB Connection failed: {e}")
+        st.error(f"DB Connection failed: {e}")
         return None
 
 def run_query(query, params=None):
